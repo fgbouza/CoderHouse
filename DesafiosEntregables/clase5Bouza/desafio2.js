@@ -2,12 +2,12 @@ const COTUSD = 215; //La idea del proyecto es obtener estos dos valores en tiemp
 const COTEUR = 240;
 
 const iva = n => n * 0.21;
-const ars2Usd = p => p * COTUSD;
-const ars2Eur = p => p * COTEUR;
+const ars2Usd = p => p / COTUSD;
+const ars2Eur = p => p / COTEUR;
 
-let nombreProducto;
-let descripcionProducto;
-let precio;
+let nombreProducto = "";
+let descripcionProducto = "";
+let precio = 0;
 
 function entrada()
 {
@@ -32,7 +32,6 @@ function ingresoString(nombreDato)
             alert("Ingrese una entrada válida");
             flag = false;
         }
-        console.log("hola");
     }
     return salida;
 }
@@ -56,11 +55,10 @@ function imprimirProducto(nombre, descripcion, precio)
 {
     alert("Nombre del producto: "+ nombre +
         "\nDescripción: "+ descripcion +
-        "\nPrecio final: $"+ precio +
-        "\nCotización en U$D: $"+ars2Usd(precio)+
-        "\nCotizacion en Euro: €"+ars2Eur(precio));
+        "\nPrecio final: $"+ Math.round(precio).toFixed(2) +
+        "\nCotización en U$D: $"+Math.round(ars2Usd(precio)).toFixed(2)+
+        "\nCotizacion en Euro: €"+Math.round(ars2Eur(precio)).toFixed(2)); //redondeo de las conversiones a dos decimales
 }
-
 function consultarSiNo(pregunta)
 {
     do 
@@ -71,18 +69,20 @@ function consultarSiNo(pregunta)
         if(isNaN(respuesta) || respuesta > 1 || respuesta < 0)
         {
             alert("Ingrese una entrada válida.");
-        }else if(respuesta = 1) return true;
-            else if(respuesta = 0) return false;
+        }else if(respuesta == 1) return true;
+            else if(respuesta == 0) return false;
     
     } while (isNaN(respuesta) || respuesta > 1 || respuesta < 0);
 }
+function main(){
+    alert("Bienvenido al ingreso de productos para su nuevo E-Commerce.");
+    do{
+        entrada();
+        if(consultarSiNo("¿Desea incluir IVA en el precio final?")) 
+            precio = precio + iva(precio);
 
-alert("Bienvenido al ingreso de productos para su nuevo E-Commerce.");
-do{
-    entrada();
-    if(consultarSiNo("¿Desea incluir IVA en el precio final?")) 
-        precio = precio + iva(precio);
+        imprimirProducto(nombreProducto, descripcionProducto, precio);
 
-    imprimirProducto(nombreProducto, descripcionProducto, precio);
-
-}while(consultarSiNo("¿Desea continuar ingresando productos?"));
+    }while(consultarSiNo("¿Desea continuar ingresando productos?"));
+}
+main();
