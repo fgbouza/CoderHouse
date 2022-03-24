@@ -89,7 +89,7 @@ function ingresoInt(nombreDato, salida)
 {
     let flag = true;
     let errorTag = document.getElementById("error"+nombreDato);
-    if(isNaN(parseInt(salida)))
+    if(isNaN(parseInt(salida)) || parseInt(salida) <= 0)
     {
         errorTag.toggleAttribute("hidden", false);
         flag = false;
