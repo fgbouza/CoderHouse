@@ -9,6 +9,7 @@ let descripcionProducto = "";
 let precio = 0;
 let prodId = 0;
 let btnEnter = document.getElementById("btnEnter");
+let btnUserName = document.getElementById("btnUserName");
 let header = document.getElementById("headerPage");
 
 let flagEntrada = localStorage.getItem('flagEntrada');
@@ -24,6 +25,9 @@ else{
 
 btnEnter.onclick = () => {
     main();
+}
+btnUserName.onclick = () => {
+    cambiarUserName();
 }
 
 class Producto
@@ -119,6 +123,15 @@ function consultarSiNo(pregunta)
             else if(respuesta == 0) return false;
     
     } while (isNaN(respuesta) || respuesta > 1 || respuesta < 0);
+}
+function cambiarUserName()
+{
+    let ingresoExitoso = true;
+    let userName = document.getElementById("inputUserName");
+
+    if(!ingresoString("UserName", userName.value)) ingresoExitoso = false;
+
+    if(ingresoExitoso) localStorage.setItem('nombreUser', userName.value);
 }
 function main(){
     
