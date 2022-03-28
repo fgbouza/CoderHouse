@@ -35,6 +35,7 @@ else{
 btnEnter.onclick = () => {
     main();
 }
+
 btnUserName.onclick = () => {
     cambiarUserName();
 }
@@ -139,5 +140,9 @@ function main(){
         resIva.checked ? productoIngresado.setIva() : true;
         imprimirProducto(productoIngresado, container);
         productos.push(productoIngresado);
+        Toastify({
+            text: "Producto ingresado correctamente",
+            duration: 2000
+        }).showToast();
     }
 }
