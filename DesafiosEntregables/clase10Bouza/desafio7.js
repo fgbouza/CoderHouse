@@ -15,12 +15,12 @@ let header = document.getElementById("headerPage");
 let flagEntrada = localStorage.getItem('flagEntrada');
 let nombreUser = localStorage.getItem('nombreUser');
 
-if(flagEntrada) header.innerText = "Bienvenido/a " + nombreUser
+if(flagEntrada) header.innerText = "Bienvenido/a "+ nombreUser 
 else{
-    nombreUser = prompt("Bienvenido/a, ingresa tu nombre");
-    localStorage.setItem('flagEntrada', true);
+    nombreUser = "";
+    
     localStorage.setItem('nombreUser', nombreUser);
-    header.innerText = "Bienvenido/a " + nombreUser;
+    header.innerText = "Bienvenido/a";
 }
 
 btnEnter.onclick = () => {
@@ -131,7 +131,11 @@ function cambiarUserName()
 
     if(!ingresoString("UserName", userName.value)) ingresoExitoso = false;
 
-    if(ingresoExitoso) localStorage.setItem('nombreUser', userName.value);
+    if(ingresoExitoso)
+    {
+        localStorage.setItem('flagEntrada', true);
+        localStorage.setItem('nombreUser', userName.value);
+    } 
 }
 function main(){
     
