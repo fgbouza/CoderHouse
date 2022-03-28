@@ -127,6 +127,10 @@ function cambiarUserName()
     {
         localStorage.setItem('flagEntrada', true);
         localStorage.setItem('nombreUser', userName.value);
+        Toastify({
+            text: "Nombre de usuario cambiado exitosamente a "+ userName.value,
+            duration: 3000
+        }).showToast();
     }
 }
 function main(){
