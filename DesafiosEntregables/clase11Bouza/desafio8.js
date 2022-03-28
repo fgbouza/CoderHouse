@@ -25,8 +25,7 @@ if(flagEntrada){
 } 
 else{
     
-    nombreUser = prompt("Bienvenido/a, ingresa tu nombre");
-    localStorage.setItem('flagEntrada', true);
+    nombreUser = "";
     localStorage.setItem('nombreUser', nombreUser);
     localStorage.setItem('arrayProd', productos);
     header.innerText = "Bienvenido/a " + nombreUser;
@@ -112,6 +111,19 @@ function imprimirProducto(producto, htmlId)
     +"</div><br/>"
 }
 
+function cambiarUserName()
+{
+    let ingresoExitoso = true;
+    let userName = document.getElementById("inputUserName");
+
+    if(!ingresoString("UserName", userName.value)) ingresoExitoso = false;
+
+    if(ingresoExitoso)
+    {
+        localStorage.setItem('flagEntrada', true);
+        localStorage.setItem('nombreUser', userName.value);
+    }
+}
 function main(){
     
     
