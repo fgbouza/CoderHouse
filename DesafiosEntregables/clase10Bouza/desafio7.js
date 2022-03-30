@@ -8,18 +8,27 @@ let nombreProducto = "";
 let descripcionProducto = "";
 let precio = 0;
 let prodId = 0;
+let productos = [];
+
 let btnEnter = document.getElementById("btnEnter");
 let btnUserName = document.getElementById("btnUserName");
 let header = document.getElementById("headerPage");
+let container = document.getElementById("listProd");
 
 let flagEntrada = localStorage.getItem('flagEntrada');
 let nombreUser = localStorage.getItem('nombreUser');
+let arrayProds = localStorage.getItem('arrayProds');
 
-if(flagEntrada) header.innerText = "Bienvenido/a "+ nombreUser 
+if(flagEntrada)
+{
+    header.innerText = "Bienvenido/a "+ nombreUser;
+    productos = JSON.parse(arrayProds);
+    if(productos != null)cargarProductos(productos);
+} 
 else{
     nombreUser = "";
-    
     localStorage.setItem('nombreUser', nombreUser);
+    localStorage.setItem('arrayProds', JSON.stringify(productos));
     header.innerText = "Bienvenido/a";
 }
 
@@ -43,6 +52,15 @@ class Producto
         console.log(this.precio * 0.21);
         this.precio = this.precio + this.precio * 0.21;
         console.log(this.precio);
+    }
+}
+
+function cargarProductos(productos)
+{
+    for(const prod of productos)
+    {
+        prodId++;
+        imprimirProducto(prod, container, prodId);
     }
 }
 
@@ -95,12 +113,6 @@ function ingresoInt(nombreDato, salida)
 
 function imprimirProducto(producto, htmlId, prodId)
 {
-    // alert("Nombre del producto: "+ producto.nombre +
-    //     "\nDescripción: "+ producto.descripcion +
-    //     "\nPrecio final: $"+ Math.round(producto.precio).toFixed(2) +
-    //     "\nCotización en U$D: $"+Math.round(ars2Usd(producto.precio)).toFixed(2)+
-    //     "\nCotizacion en Euro: €"+Math.round(ars2Eur(producto.precio)).toFixed(2)); //redondeo de las conversiones a dos decimales
-
     htmlId.innerHTML += "<div id = 'prod"+ prodId +"'>"
     +"<h3>Producto ID:"+ prodId +"</h3>"
     +"<p><strong>Nombre del producto: "+ producto.nombre +"</strong></p>"
@@ -135,11 +147,11 @@ function cambiarUserName()
     {
         localStorage.setItem('flagEntrada', true);
         localStorage.setItem('nombreUser', userName.value);
+        header.innerText = "Bienvenido/a "+  userName.value;
     } 
 }
 function main(){
     
-    let container = document.getElementById("listProd");
     let resIva = document.getElementById("inputIvaProd");
 
     let productoIngresado = entrada();
@@ -149,47 +161,8 @@ function main(){
         prodId ++;
         imprimirProducto(productoIngresado, container, prodId);
         productos.push(productoIngresado);
+
+        localStorage.setItem("arrayProds", JSON.stringify(productos));
     }
     
-
-    // if(consultarSiNo("¿Desea ver la lista de productos?"))
-    // {
-    //     let productosAInformar = "------------\n";
-    //     for(const producto of productos)
-    //     {
-    //         productosAInformar = productosAInformar 
-    //         + "Nombre: " + producto.nombre + "\n"
-    //         + "Descripción: " + producto.descripcion + "\n"
-    //         + "Precio: $" + Math.round(producto.precio).toFixed(2) + "\n"
-    //         + "Cotización en U$D: $" + Math.round(ars2Usd(producto.precio)).toFixed(2) + "\n"
-    //         + "Cotizacion en Euro: €" + Math.round(ars2Eur(producto.precio)).toFixed(2) + "\n";
-
-    //         productosAInformar = productosAInformar + "------------\n";
-    //     }
-    //     alert(productosAInformar);
-    // }
-
-    // while(consultarSiNo("¿Desea buscar productos por nombre?"))
-    // {
-    //     let param = prompt("Ingrese nombre de producto a buscar:")
-    //     const filtrados = productos.filter((pr) => pr.nombre.includes(param));
-    //     if(filtrados.length == 0) alert("No se encontraron productos");
-    //     else {
-    //         let productosAInformar = "------------\n";
-    //         for(const prod of filtrados)
-    //         {
-    //             productosAInformar = productosAInformar 
-    //             + "Nombre: " + prod.nombre + "\n"
-    //             + "Descripción: " + prod.descripcion + "\n"
-    //             + "Precio: $" + Math.round(prod.precio).toFixed(2) + "\n"
-    //             + "Cotización en U$D: $" + Math.round(ars2Usd(prod.precio)).toFixed(2) + "\n"
-    //             + "Cotizacion en Euro: €" + Math.round(ars2Eur(prod.precio)).toFixed(2) + "\n";
-
-    //             productosAInformar = productosAInformar + "------------\n";
-    //         }
-    //         alert(productosAInformar);
-    //     }
-    // }
-
-
 }

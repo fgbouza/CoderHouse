@@ -8,27 +8,27 @@ let nombreProducto = "";
 let descripcionProducto = "";
 let precio = 0;
 let lastProdId = 0;
+let productos = [];
+
 let btnEnter = document.getElementById("btnEnter");
 let btnUserName = document.getElementById("btnUserName");
 let header = document.getElementById("headerPage");
 let container = document.getElementById("listProd");
 
 let flagEntrada = localStorage.getItem('flagEntrada');
-let arrayProd = localStorage.getItem('arrayProd');
+let arrayProds = localStorage.getItem('arrayProds');
 let nombreUser = localStorage.getItem('nombreUser');
-let productos = [];
+
 
 if(flagEntrada){
     header.innerText = "Bienvenido/a " + nombreUser
-    for (const prod in arrayProd) {
-        imprimirProducto(prod, container);
-    }
+    productos = JSON.parse(arrayProds);
+    if(productos != null)cargarProductos(productos);
 } 
 else{
-    
     nombreUser = "";
     localStorage.setItem('nombreUser', nombreUser);
-    localStorage.setItem('arrayProd', productos);
+    localStorage.setItem('arrayProds', JSON.stringify(productos));
     header.innerText = "Bienvenido/a " + nombreUser;
 }
 
@@ -54,6 +54,14 @@ class Producto
         console.log(this.precio * 0.21);
         this.precio = this.precio + this.precio * 0.21;
         console.log(this.precio);
+    }
+}
+
+function cargarProductos(productos)
+{
+    for(const prod of productos)
+    {
+        imprimirProducto(prod, container);
     }
 }
 
@@ -127,14 +135,14 @@ function cambiarUserName()
     {
         localStorage.setItem('flagEntrada', true);
         localStorage.setItem('nombreUser', userName.value);
+        header.innerText = "Bienvenido/a "+  userName.value;
         Toastify({
-            text: "Nombre de usuario cambiado exitosamente a "+ userName.value,
+            text: "Nombre de usuario cambiado exitosamente a "+ userName.value+".\n Recargar la página para que sea válido",
             duration: 3000
         }).showToast();
     }
 }
 function main(){
-    
     
     let resIva = document.getElementById("inputIvaProd");
     
@@ -144,6 +152,7 @@ function main(){
         resIva.checked ? productoIngresado.setIva() : true;
         imprimirProducto(productoIngresado, container);
         productos.push(productoIngresado);
+        localStorage.setItem("arrayProds", JSON.stringify(productos));
         Toastify({
             text: "Producto ingresado correctamente",
             duration: 2000
