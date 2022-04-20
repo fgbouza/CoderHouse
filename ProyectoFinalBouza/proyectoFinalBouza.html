@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>Stockea.me</title>
+</head>
+<body>
+
+    <h2 id="headerPage"><strong>Stockea.me</strong></h2>
+    <br/>
+    <div id="userName">
+        <input id="inputUserName" type="text">
+        <button id="btnUserName">Cambiar UserName</button>
+        <p id="errorUserName" hidden="true" style="color: red;">Ingrese un nombre de usuario válido</p>
+    </div>
+    <br/>
+    <br/>
+    <div id="search">
+        <label for="inputSearch">Escribí aquí para buscar un producto POR NOMBRE</label>
+        <input id="inputSearch" type="text" oninput="filtrarProductos(this.value)">
+        <p id="errorSearch" hidden="true" style="color: red;">No se encontraron resultados para tu búsqueda</p>
+    </div>
+    <br/>
+    <br/>
+    <div id="nameProd">
+        <label for="inputNameProd">Nombre del producto</label>
+        <input id="inputNameProd" type="text">
+        <p id="errorNameProd" hidden="true" style="color: red;">Ingrese un nombre válido</p>
+    </div>
+    <br/>
+    <div id="descProd">
+        <label for="inputDescProd">Descripción del producto</label>
+        <input id="inputDescProd" type="text">
+        <p id="errorDescProd" hidden="true" style="color: red;">Ingrese una descripción válida</p>
+    </div>
+    <br/>
+    <div id="priceProd">
+        <label for="inputPriceProd">Precio del producto</label>
+        <input id="inputPriceProd" type="text" pattern="[0-9]+">
+        <p id="errorPriceProd" hidden="true" style="color: red;">Ingrese un precio válido</p>
+    </div>
+    <br/>
+    <div id="ivaProd">
+        <input id="inputIvaProd" type="checkbox"><label for="inputIvaProd">¿Desea incluir IVA en el precio?</label>
+    </div>
+    <br/>
+    <button id="btnEnter">Ingresar producto</button>
+    <div id="listProd">
+        <h3>Lista de productos:</h3>
+    </div>
+    
+    <script src="proyectoFinalBouza.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+</html>
