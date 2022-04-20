@@ -1,38 +1,29 @@
 let urlConversor = "https://api.bluelytics.com.ar/v2/latest";
 
-let cotUsd = getValueUsd();
-let cotEur = getValueEur();
-
-async function fetchtValueUsd() {
-    const response = await fetch(urlConversor, {});
-    const json = await response.json();
-    return json.blue.value_sell;
-}
-
-async function fetchValueEur() {
-    const response = await fetch(urlConversor, {});
-    const json = await response.json();
-    return json.blue_euro.value_sell;
-}
-async function getValueUsd()
-{
-    const value = await fetchtValueUsd();
-    return value;
-}
-
-async function getValueEur()
-{
-    const value = await fetchValueEur();
-    return value;
-}
-const ars2Usd = p => parseFloat(p / cotUsd);
-const ars2Eur = p => parseFloat(p / cotEur);
-
 let nombreProducto = "";
 let descripcionProducto = "";
 let precio = 0;
 let lastProdId = 0;
 let productos = [];
+
+let txtCotUsd = document.getElementById("txtUsd");
+let txtCotEur = document.getElementById("txtEur");
+
+async function getCotUsd(){
+    const response = await fetch(urlConversor);
+    const data = await response.json();
+    txtCotUsd.innerText = data.blue.value_sell;
+    return data.blue.value_sell;
+};
+async function getCotEur(){
+    const response = await fetch(urlConversor);
+    const data = await response.json();
+    txtCotEur.innerText = data.blue_euro.value_sell;
+    return data.blue_euro.value_sell;
+};
+
+const ars2Usd = async(p) => parseFloat(p / parseFloat(await getCotUsd()));
+const ars2Eur = async(p) => parseFloat(p / parseFloat(await getCotEur()));
 
 let btnEnter = document.getElementById("btnEnter");
 let btnUserName = document.getElementById("btnUserName");
@@ -79,11 +70,11 @@ class Producto
     }
 }
 
-function cargarProductos(productos)
+async function cargarProductos(productos)
 {
     for(const prod of productos)
     {
-        imprimirProducto(prod, container);
+        await imprimirProducto(prod, container);
     }
 }
 
@@ -181,17 +172,18 @@ function ingresoInt(nombreDato, salida)
     return flag;
 }
 
-function imprimirProducto(producto, htmlId)
+async function imprimirProducto(producto, htmlId)
 {
     const {Id, nombre, descripcion, precio} = producto;
-    htmlId.innerHTML += "<div id = 'prod"+ Id +"'>"
+    htmlId.innerHTML += "<div id = 'prod"+ Id +"' style='width:20%;flex:1 0 25%;'>"
     +"<h3>Producto ID:"+ Id +"</h3>"
     +"<p><strong>Nombre del producto: "+ nombre +"</strong></p>"
     +"<p><strong>Descripción: "+ descripcion +"</strong></p>"
     +"<p><strong>Precio final: $"+ Math.round(precio).toFixed(2) +"</strong></p>"
-    +"<p><strong>Cotización en U$D: $"+ Math.round(ars2Usd(precio)).toFixed(2) +"</strong></p>"
-    +"<p><strong>Cotizacion en Euro: €"+ Math.round(ars2Eur(precio)).toFixed(2) +"</strong></p>"
-    +"</div><br/>"
+    +"<p><strong>Cotización en U$D: $"+ parseFloat(await ars2Usd(precio)).toFixed(2) +"</strong></p>"
+    +"<p><strong>Cotizacion en Euro: €"+ parseFloat(await ars2Eur(precio)).toFixed(2) +"</strong></p>"
+    +"<br/></div>"
+    
 }
 
 function cambiarUserName()
@@ -205,7 +197,7 @@ function cambiarUserName()
     {
         localStorage.setItem('flagEntrada', true);
         localStorage.setItem('nombreUser', userName.value);
-        header.innerText = "Bienvenido/a "+  userName.value;
+        header.innerText = "Bienvenido/a "+  userName.value + " a stockea.me";
         Toastify({
             text: "Nombre de usuario cambiado exitosamente a "+ userName.value+".\n Recargar la página para que sea válido",
             duration: 3000

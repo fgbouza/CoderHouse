@@ -10,20 +10,29 @@
 <body>
 
     <h2 id="headerPage"><strong>Stockea.me</strong></h2>
-    <br/>
-    <div id="userName">
-        <input id="inputUserName" type="text">
-        <button id="btnUserName">Cambiar UserName</button>
-        <p id="errorUserName" hidden="true" style="color: red;">Ingrese un nombre de usuario válido</p>
+    
+    <div id="cots" style="display:flex">
+        <div id="userName" style="width:20%; flex: 1;">
+            <input id="inputUserName" type="text">
+            <button id="btnUserName">Cambiar UserName</button>
+            <p id="errorUserName" hidden="true" style="color: red;">Ingrese un nombre de usuario válido</p>
+        </div>
+        <br/>
+        <br/>
+        <div id="search" style="width:20%; flex: 1;">
+            <label for="inputSearch">Escribí aquí para buscar un producto POR NOMBRE</label>
+            <input id="inputSearch" type="text" oninput="filtrarProductos(this.value)">
+            <p id="errorSearch" hidden="true" style="color: red;">No se encontraron resultados para tu búsqueda</p>
+        </div>
+        
     </div>
     <br/>
-    <br/>
-    <div id="search">
-        <label for="inputSearch">Escribí aquí para buscar un producto POR NOMBRE</label>
-        <input id="inputSearch" type="text" oninput="filtrarProductos(this.value)">
-        <p id="errorSearch" hidden="true" style="color: red;">No se encontraron resultados para tu búsqueda</p>
+    <div id="opts" style="width:100%; display:flex; flex-wrap:wrap;">
+        <div style="width:20%; flex: 1;"><h4>Cotización actual USD: <p id="txtUsd"></p></h4></div>
+        <div style="width:20%; flex: 1;"><h4>Cotización actual EUR: <p id="txtEur"></p></h4></div>
+        <br/>
     </div>
-    <br/>
+    
     <br/>
     <div id="nameProd">
         <label for="inputNameProd">Nombre del producto</label>
@@ -48,8 +57,9 @@
     </div>
     <br/>
     <button id="btnEnter">Ingresar producto</button>
-    <div id="listProd">
-        <h3>Lista de productos:</h3>
+    <h3>Lista de productos:</h3>
+    <div id="listProd" style="width:100%; display:flex; flex-wrap: wrap;">
+        
     </div>
     
     <script src="proyectoFinalBouza.js"></script>
